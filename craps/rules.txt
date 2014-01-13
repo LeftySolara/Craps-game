@@ -1,0 +1,23 @@
+Simple craps simulator
+
+This program is meant to simulate the game of Craps in it's most basic form. Two dice will be rolled, and win/lose conditions will be checked.
+
+Future additions include a more in-depth implementation of the rules, a betting system, multiplayer, and AI opponents.
+
+
+The Rules:
+
+    Each round is played by rolling two dice and reporting the result.
+
+    First roll:
+        - If roll is a 2, 3, or 12, you lose the round
+        - If roll is a 7 or 11, you win the round
+        - Any other roll is recorded and called your "point"
+
+    Remaining rolls:
+        - Continue to roll the dice until you
+            a) roll your point
+            b) roll a 7
+        - If you roll your point, you win the round
+        - If you roll a 7, you lose the round
+        
