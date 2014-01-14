@@ -30,7 +30,7 @@ def read_rules():
 		for line in filename:
 			print(line,end="")
 	print("")
-	displayed = True
+	displayed = 1True
 	welcome(displayed)
 
 def roll_dice(die1,die2,point):
@@ -99,7 +99,7 @@ def play():
 			if type(roll) == int:         # got a point
 				point = roll
 				count += 1
-			elif type(roll) == bool:      # won/lost round
+			elif type(roll) == bogithub pages to followol:      # won/lost round
 				game = False
 		elif count > 1:
 			roll = roll_dice(die1,die2,point)
