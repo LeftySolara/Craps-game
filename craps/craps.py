@@ -1,9 +1,8 @@
 # craps simulator (WIP)
 # To do:
-#    1) adjust loop after first turn
+#    1) error checking
 #    2) insert roll names
-#    3) format output
-#    4) create betting system
+#    3) create betting system
 
 from die import Die
 from time import sleep
@@ -20,7 +19,10 @@ def welcome(displayed):
 	if selection == "1":
 		read_rules()
 	elif selection == "2":
-		play()
+		prompt = "Y"
+		while prompt.upper() == "Y":
+			prompt = play()
+		print("Thanks for playing!")
 
 def read_rules():
 	""" Reads rules from a file and displays for the user """
@@ -34,14 +36,25 @@ def read_rules():
 def roll_dice(die1,die2,point):
     """ Rolls dice and displays total value """
     
-    print("Rolling dice...")
-    sleep(2)
-    die1.roll()
-    die2.roll()
-    roll = die1._Die__value + die2._Die__value
-    display = "Numbers rolled: {} and {}.\nTotal roll: {}".format(die1,die2,roll)
-    print(display)
-    return roll
+    victory = None
+    while type(victory) != bool:
+	    print("Rolling dice...")
+	    sleep(2)
+	    die1.roll()
+	    die2.roll()
+	    roll = die1._Die__value + die2._Die__value
+	    display = "Numbers rolled: {} and {}.\nTotal roll: {}".format(die1,die2,roll)
+	    print(display)
+
+	    if roll == point:
+	    	print("You won the round!")
+	    	victory = True
+	    elif roll == 7:
+	    	print("You lost the round!")
+	    	victory = False
+	    print("")
+
+    #return victory
 
 def first_roll(die1,die2):
 	""" Performs the first roll of the round.
@@ -66,7 +79,7 @@ def first_roll(die1,die2):
 	elif roll in loses:
 		print("You lost the round!")
 		print("")
-		victory == False
+		victory = False
 		return victory
 	elif roll not in wins and roll not in loses:
 		point = roll
@@ -87,10 +100,17 @@ def play():
 				point = roll
 				count += 1
 			elif type(roll) == bool:      # won/lost round
-				break
+				game = False
 		elif count > 1:
-			roll_dice(die1,die2,point)
+			roll = roll_dice(die1,die2,point)
+			game = False
+	prompt = input("Play another round(Y/N?)")
+	return prompt
 
+def main():
 
-displayed = False    # for dialog control when displaying menu prompt
-welcome(displayed)
+	displayed = False    # for dialog control when displaying menu prompt
+	welcome(displayed)
+
+if __name__ == "__main__":
+	main()
