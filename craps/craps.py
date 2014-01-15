@@ -5,6 +5,7 @@
 #    3) create betting system
 
 from die import Die
+from money import Money
 from time import sleep
 
 def welcome(displayed):
@@ -19,9 +20,10 @@ def welcome(displayed):
 	if selection == "1":
 		read_rules()
 	elif selection == "2":
+		player = spawn()
 		prompt = "Y"
 		while prompt.upper() == "Y":
-			prompt = play()
+			prompt = play(player)
 		print("Thanks for playing!")
 
 def read_rules():
@@ -30,12 +32,12 @@ def read_rules():
 		for line in filename:
 			print(line,end="")
 	print("")
-	displayed = 1True
+	displayed = True
 	welcome(displayed)
 
-def roll_dice(die1,die2,point):
+def roll_dice(die1,die2,point,player):
     """ Rolls dice and displays total value """
-    
+
     victory = None
     while type(victory) != bool:
 	    print("Rolling dice...")
@@ -48,17 +50,22 @@ def roll_dice(die1,die2,point):
 
 	    if roll == point:
 	    	print("You won the round!")
+	    	print("You gained ${}".format(player.bet_amt))
+	    	player.wallet += player.bet_amt
 	    	victory = True
 	    elif roll == 7:
 	    	print("You lost the round!")
+	    	print("You lost ${}".format(player.bet_amt))
+	    	player.wallet -= player.bet_amt
 	    	victory = False
+	    print("Your wallet: ${}".format(player.wallet))
 	    print("")
 
-    #return victory
-
-def first_roll(die1,die2):
+def first_roll(die1,die2,player):
 	""" Performs the first roll of the round.
 	    Returns status of round victory or point value """
+
+	print("Your wallet: ${}".format(player.wallet))
 
 	wins = [7,11]
 	loses = [2,3,12]
@@ -72,22 +79,46 @@ def first_roll(die1,die2):
 	print(display)
 
 	if roll in wins:
-		print("You won the round!")
-		print("")
+		print("You rolled a natural!")
+		if player.bet_type == "pass":
+			player.wallet += player.bet_amt
+			print("You gained ${}".format(player.bet_amt))
+		elif player.bet_type == "no pass":
+			player.wallet -= player.bet_amt
+			print("You lost ${}".format(player.bet_amt))
+		elif player.bet_type == "no bet":
+			pass
+		print("Your wallet: ${}".format(player.wallet))
 		victory = True
 		return victory
+
 	elif roll in loses:
-		print("You lost the round!")
-		print("")
+		print("You crapped out!")
+		if player.bet_type == "pass":
+			player.wallet -= player.bet_amt
+			print("You lost ${}".format(player.bet_amt))
+		elif player.bet_type == "no pass":
+			player.wallet += player.bet_amt
+			print("You gained ${}".format(player.bet_amt))
+		elif player.bet_type == "no bet":
+			pass
+		print("Your wallet: ${}".format(player.wallet))
 		victory = False
 		return victory
+
 	elif roll not in wins and roll not in loses:
 		point = roll
 		print("Your point: {}".format(point))
 		print("")
 		return point
 
-def play():
+def spawn():
+	""" Initialized values for player's wallet. """
+
+	player = Money()
+	return player
+
+def play(player):
 	game = True
 	die1 = Die()
 	die2 = Die()
@@ -95,14 +126,15 @@ def play():
 
 	while game == True:
 		if count == 1:
-			roll = first_roll(die1,die2)
+			player.betting()
+			roll = first_roll(die1,die2,player)
 			if type(roll) == int:         # got a point
 				point = roll
 				count += 1
-			elif type(roll) == bogithub pages to followol:      # won/lost round
+			elif type(roll) == bool:      # won/lost round
 				game = False
 		elif count > 1:
-			roll = roll_dice(die1,die2,point)
+			roll = roll_dice(die1,die2,point,player)
 			game = False
 	prompt = input("Play another round(Y/N?)")
 	return prompt
