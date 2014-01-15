@@ -1,6 +1,6 @@
 # money class
 
-class money(object):
+class Money(object):
 	""" Represents player's wallet and bets """
 	def __init__(self):
 		
@@ -11,14 +11,23 @@ class money(object):
 	
 	def __str__(self):
 
-		return self.wallet
+		return str(self.wallet)
 
-	def addition(self):
-		""" Adds money to wallet """
+	def betting(self):
+		""" Allows the player to place a bet """
 
-	def place(self,bet,kind):
-		""" Places bet of specified type and amount """
-
-		self.bet_amt = bet
-		self.wallet -= self.bet_amt
-		self.bet_type = kind
+		bets = ["pass","no pass","no bet"]
+		self.bet_type = None
+		self.bet_amt = 0
+		while self.bet_type == None:
+			print("Place a bet (pass/no pass/no bet)")
+			kind = input("> ")
+			if kind.lower() in bets:
+				self.bet_type = kind.lower()
+				print(kind.capitalize(),"selected.")
+				print("")
+		if self.bet_type == "pass" or self.bet_type == "no pass":
+			while self.bet_amt == 0:
+				print("Bet how much?")
+				amount = int(input("> "))
+				self.bet_amt = amount
