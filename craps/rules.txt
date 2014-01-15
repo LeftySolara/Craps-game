@@ -3,8 +3,6 @@ Simple craps simulator
 
 This program is meant to simulate the game of Craps in it's most basic form. Two dice will be rolled, and win/lose conditions will be checked.
 
-Future additions include a more in-depth implementation of the rules, a betting system, multiplayer, and AI opponents.
-
 
 The Rules:
 
