@@ -4,10 +4,9 @@ class Money(object):
 	""" Represents player's wallet and bets """
 	def __init__(self):
 		
-		self.wallet = 10000    # amount of money in wallet
-		self.bet_amt = 0       # size of bet
-		self.bet_type = None   # type of bet placed
-		self.bets = 0          # number of bets
+		self.wallet = 10000
+		self.bet_amt = 0
+		self.bet_type = None
 	
 	def __str__(self):
 
@@ -19,13 +18,17 @@ class Money(object):
 		bets = ["pass","no pass","no bet"]
 		self.bet_type = None
 		self.bet_amt = 0
+
+		# select bet type
 		while self.bet_type == None:
 			print("Place a bet (pass/no pass/no bet)")
-			kind = input("> ")
-			if kind.lower() in bets:
-				self.bet_type = kind.lower()
-				print(kind.capitalize(),"selected.")
+			prompt = input("> ")
+			if prompt.lower() in bets:
+				self.bet_type = prompt.lower()
+				print(prompt.capitalize(),"selected.")
 				print("")
+
+		# select bet amount
 		if self.bet_type == "pass" or self.bet_type == "no pass":
 			while self.bet_amt == 0:
 				print("Bet how much?")
