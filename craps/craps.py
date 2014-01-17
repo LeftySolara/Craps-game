@@ -1,8 +1,4 @@
-# craps simulator (WIP)
-# To do:
-#    1) error checking
-#    2) insert roll names
-#    3) create betting system
+# Simple craps simulator
 
 from die import Die
 from money import Money
@@ -11,9 +7,9 @@ from time import sleep
 def welcome(displayed):
 	""" Displays welcome screen and main menu. Prompts user for option. """
 
-	if displayed == False:
+	if displayed == False:    # rules have not been displayed
 		print("Welcome to Craps!\nEnter 1 to show rules or 2 to play")
-	elif displayed == True:
+	elif displayed == True:   # rules have been displayed
 		print("Enter 1 to show rules again or 2 to play")
 
 	selection = input()
@@ -25,6 +21,8 @@ def welcome(displayed):
 		while prompt.upper() == "Y":
 			prompt = play(player)
 		print("Thanks for playing!")
+	else:
+		print("Invalid option. Exiting...")
 
 def read_rules():
 	""" Reads rules from a file and displays for the user """
@@ -41,7 +39,7 @@ def roll_dice(die1,die2,point,player):
     victory = None
     while type(victory) != bool:
 	    print("Rolling dice...")
-	    sleep(2)
+	    sleep(3)
 	    die1.roll()
 	    die2.roll()
 	    roll = die1._Die__value + die2._Die__value
@@ -71,7 +69,7 @@ def first_roll(die1,die2,player):
 	loses = [2,3,12]
 
 	print("Performing first roll...")
-	sleep(2)
+	sleep(3)
 	die1.roll()
 	die2.roll()
 	roll = die1._Die__value + die2._Die__value
@@ -122,18 +120,18 @@ def play(player):
 	game = True
 	die1 = Die()
 	die2 = Die()
-	count = 1        # turn number for current round
+	turn = 1        # turn number for current round
 
 	while game == True:
-		if count == 1:
+		if turn == 1:
 			player.betting()
 			roll = first_roll(die1,die2,player)
 			if type(roll) == int:         # got a point
 				point = roll
-				count += 1
+				turn += 1
 			elif type(roll) == bool:      # won/lost round
 				game = False
-		elif count > 1:
+		elif turn > 1:
 			roll = roll_dice(die1,die2,point,player)
 			game = False
 	prompt = input("Play another round(Y/N?)")
@@ -141,7 +139,7 @@ def play(player):
 
 def main():
 
-	displayed = False    # for dialog control when displaying menu prompt
+	displayed = False
 	welcome(displayed)
 
 if __name__ == "__main__":
