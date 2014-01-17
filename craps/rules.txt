@@ -1,7 +1,4 @@
-
-Simple craps simulator
-
-This program is meant to simulate the game of Craps in it's most basic form. Two dice will be rolled, and win/lose conditions will be checked.
+Craps Simulator
 
 
 The Rules:
@@ -14,9 +11,17 @@ The Rules:
         - Any other roll is recorded and called your "point"
 
     Remaining rolls:
-        - Continue to roll the dice until you
+        - Continue to roll the dice until you:
             a) roll your point
             b) roll a 7
         - If you roll your point, you win the round
         - If you roll a 7, you lose the round
-        
+
+Betting:
+
+    Each game starts the player with $10,000. Before each round,
+    the player will be asked to choose a bet type and amount. There
+    are two types of bets: pass (player wins round) and no pass
+    (player loses round). There is also an option to not place
+    a bet at all for the round.
+    
