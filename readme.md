@@ -1,1 +1,1 @@
-Simple games written in Python.
+Simple games for the command line
